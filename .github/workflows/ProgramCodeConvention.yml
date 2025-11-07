@@ -1,0 +1,27 @@
+name: Program Code Convention Check
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  check_code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Pylint installation
+        run: |
+          sudo apt-get update
+          pip install pylint
+
+      - name: Check code conventions with pylint
+        run: |
+          echo "Running Pylint..."
+          if pylint ProgramCode.py --disable=all --enable=C | grep -q "Convention"; then
+            echo "Found code convention issues → FAIL"
+            exit 1
+          fi
+          echo "Code conventions OK"
