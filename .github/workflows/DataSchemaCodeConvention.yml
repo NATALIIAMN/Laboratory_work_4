@@ -16,9 +16,14 @@ jobs:
         run: |
           echo "Running SQL code convention check..."
 
-          if [ ! -f DataSchema.sql ]; then
-            echo "DataSchema.sql not found → FAIL"
+          if [ ! -f DataSchema.sql ] && [ ! -f DataSchemaModified.sql ]; then
+            echo "No SQL schema file found → FAIL"
             exit 1
+          fi
+
+          FILE="DataSchema.sql"
+          if [ -f DataSchemaModified.sql ]; then
+            FILE="DataSchemaModified.sql"
           fi
 
           echo "Checking SQL keywords..."
