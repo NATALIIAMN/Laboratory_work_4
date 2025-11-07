@@ -20,8 +20,7 @@ jobs:
       - name: Check code conventions with pylint
         run: |
           echo "Running Pylint..."
-          if pylint ProgramCode.py --disable=all --enable=C | grep -q "Convention"; then
-            echo "Found code convention issues → FAIL"
-            exit 1
+          pylint ProgramCode.py || exit 1
+          
           fi
           echo "Code conventions OK"
