@@ -26,7 +26,7 @@ jobs:
             FILE="DataSchemaModified.sql"
           fi
 
-          echo "Checking SQL keywords..."
+          echo "Checking SQL keywords in $FILE..."
 
           if grep -Eiq "\b(select|from|where|and|or|insert|update|delete|create|table|primary|key)\b" DataSchema.sql; then
             echo "Found lowercase SQL keywords → FAIL"
