@@ -1,1 +1,29 @@
+name: Print Software Versions
 
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  processing_layer:
+    name: Processing Layer Software Versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Node.js version
+        run: node --version
+
+      - name: Check Python (FastAPI) version
+        run: python3 --version
+
+  data_layer:
+    name: Data Layer Software Versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PostgreSQL version
+        run: psql --version
+
+      - name: Check Redis version
+        run: redis-server --version
+
+      - name: Check AWS CLI (S3/MinIO analog) version
+        run: aws --version
