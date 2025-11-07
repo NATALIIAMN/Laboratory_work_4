@@ -20,8 +20,8 @@ jobs:
       - name: Select file to check
         id: select_file
         run: |
-          if [ -f ProgramCodeModified.py ]; then
-            echo "FILE=ProgramCodeModified.py" >> $GITHUB_OUTPUT
+          if [ -f program_code_modified.py ]; then
+            echo "FILE=program_code_modified.py" >> $GITHUB_OUTPUT
           elif [ -f ProgramCode.py ]; then
             echo "FILE=ProgramCode.py" >> $GITHUB_OUTPUT
           else
