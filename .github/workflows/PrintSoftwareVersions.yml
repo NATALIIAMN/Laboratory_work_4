@@ -19,6 +19,9 @@ jobs:
     name: Data Layer Software Versions
     runs-on: ubuntu-latest
     steps:
+      - name: Install Redis
+        run: sudo apt-get update && sudo apt-get install -y redis-server
+
       - name: Check PostgreSQL version
         run: psql --version
 
