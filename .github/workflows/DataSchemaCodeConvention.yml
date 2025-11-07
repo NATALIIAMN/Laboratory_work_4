@@ -1,0 +1,46 @@
+name: Data Schema Code Convention Check
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  check_schema:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check SQL or JSON file formatting
+        run: |
+          echo "Running code convention check..."
+
+          if [ ! -f DataSchema.sql ] && [ ! -f DataSchema.json ]; then
+            echo "No schema file found (DataSchema.sql or DataSchema.json)"
+            exit 1
+          fi
+
+          if [ -f DataSchema.sql ]; then
+            echo "Checking SQL file rules..."
+
+            if grep -Eiq "\b(select|from|where|and|or|create|table|insert|update|delete)\b" DataSchema.sql; then
+              echo "Found lowercase SQL keywords → FAIL"
+              exit 1
+            fi
+
+            echo "SQL formatting OK"
+          fi
+
+          if [ -f DataSchema.json ]; then
+            echo "Checking JSON file rules..."
+
+            if grep -Eiq '"[A-Z]' DataSchema.json; then
+              echo "Found uppercase JSON key → FAIL"
+              exit 1
+            fi
+
+            echo "JSON formatting OK"
+          fi
+
+          echo "Schema OK"
