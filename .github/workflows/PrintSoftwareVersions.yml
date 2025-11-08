@@ -16,10 +16,10 @@ jobs:
         run: npm --version
 
       - name: Check WebRTC tools (ffmpeg presence)
-        run: ffmpeg -version || echo "FFmpeg not installed (used as WebRTC helper tool)"
+        run: ffmpeg -version 
 
       - name: Check Socket.io installation (via npm)
-        run: npm list socket.io || echo "socket.io not installed in project"
+        run: npm list socket.io 
 
   data_layer:
     name: Data Layer Software Versions
