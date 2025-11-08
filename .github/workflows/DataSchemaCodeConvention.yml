@@ -20,10 +20,12 @@ jobs:
         run: |
           echo "Running SQLFluff..."
 
-          if [ -f DataSchema.sql ]; then
+          if [ -f DataSchemaModified.sql ]; then
+            FILE="DataSchemaModified.sql"
+          elif [ -f DataSchema.sql ]; then
             FILE="DataSchema.sql"
           else
-            echo "DataSchema.sql not found → FAIL"
+            echo "No SQL schema file found → FAIL"
             exit 1
           fi
 
