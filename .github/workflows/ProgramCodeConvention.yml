@@ -25,7 +25,9 @@ jobs:
 
       - name: Run ESLint
         run: |
-          if [ -f ProgramCode.js ]; then
+          if [ -f ProgramCodeModified.js ]; then
+            FILE="ProgramCodeModified.js"
+          elif [ -f ProgramCode.js ]; then
             FILE="ProgramCode.js"
           else
             echo "No JS code file found → FAIL"
