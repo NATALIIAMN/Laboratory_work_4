@@ -12,25 +12,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check SQL formatting rules
+      - name: Install SQLFluff
         run: |
-          echo "Running SQL code convention check..."
+          pip install sqlfluff
 
-          if [ ! -f DataSchema.sql ] && [ ! -f DataSchemaModified.sql ]; then
+      - name: Lint SQL schema
+        run: |
+          echo "Running SQLFluff..."
+          
+          if [ -f DataSchemaModified.sql ]; then
+            FILE="DataSchemaModified.sql"
+          elif [ -f DataSchema.sql ]; then
+            FILE="DataSchema.sql"
+          else
             echo "No SQL schema file found → FAIL"
             exit 1
           fi
 
-          FILE="DataSchema.sql"
-          if [ -f DataSchemaModified.sql ]; then
-            FILE="DataSchemaModified.sql"
-          fi
-
-          echo "Checking SQL keywords in $FILE..."
-
-          if grep -Eq "\b(select|from|where|and|or|insert|update|delete|create|table|primary|key)\b" "$FILE"; then
-            echo "Found lowercase SQL keywords → FAIL"
-            exit 1
-          fi
-
-          echo "SQL formatting OK"
+          sqlfluff lint "$FILE" --dialect postgres
