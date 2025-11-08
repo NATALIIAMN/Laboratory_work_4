@@ -5,31 +5,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  check_code:
+  lint_js:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install pylint
-        run: |
-          sudo apt-get update
-          pip install pylint
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Select file to check
-        id: select_file
+      - name: Install ESLint
         run: |
-          if [ -f program_code_modified.py ]; then
-            echo "FILE=program_code_modified.py" >> $GITHUB_OUTPUT
-          elif [ -f ProgramCode.py ]; then
-            echo "FILE=ProgramCode.py" >> $GITHUB_OUTPUT
+          npm init -y
+          npm install eslint --save-dev
+          npx eslint --init || true
+
+      - name: Run ESLint
+        run: |
+          if [ -f program_code_modified.js ]; then
+            FILE="program_code_modified.js"
           else
-            echo "No program code file found → FAIL"
-            exit 1
+            FILE="ProgramCode.js"
           fi
-
-      - name: Run pylint
-        run: |
-          echo "Running pylint on ${{ steps.select_file.outputs.FILE }}..."
-          pylint ${{ steps.select_file.outputs.FILE }} || exit 1
+          npx eslint "$FILE"
