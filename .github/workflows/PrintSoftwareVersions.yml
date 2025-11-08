@@ -12,8 +12,14 @@ jobs:
       - name: Check Node.js version
         run: node --version
 
-      - name: Check Python (FastAPI) version
-        run: python3 --version
+      - name: Check NPM version
+        run: npm --version
+
+      - name: Check WebRTC tools (ffmpeg presence)
+        run: ffmpeg -version || echo "FFmpeg not installed (used as WebRTC helper tool)"
+
+      - name: Check Socket.io installation (via npm)
+        run: npm list socket.io || echo "socket.io not installed in project"
 
   data_layer:
     name: Data Layer Software Versions
