@@ -19,13 +19,11 @@ jobs:
       - name: Lint SQL schema
         run: |
           echo "Running SQLFluff..."
-          
-          if [ -f DataSchemaModified.sql ]; then
-            FILE="DataSchemaModified.sql"
-          elif [ -f DataSchema.sql ]; then
+
+          if [ -f DataSchema.sql ]; then
             FILE="DataSchema.sql"
           else
-            echo "No SQL schema file found → FAIL"
+            echo "DataSchema.sql not found → FAIL"
             exit 1
           fi
 
