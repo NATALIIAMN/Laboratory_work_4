@@ -25,8 +25,8 @@ jobs:
 
       - name: Run ESLint
         run: |
-          if [ -f ProgramCodeModified.js ]; then
-            FILE="ProgramCodeModified.js"
+          if [ -f program_code_modified.js ]; then
+            FILE="program_code_modified.js"
           elif [ -f ProgramCode.js ]; then
             FILE="ProgramCode.js"
           else
